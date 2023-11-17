@@ -1,0 +1,36 @@
+FROM ubuntu:mantic as base
+WORKDIR /root
+RUN apt update && apt upgrade -y && apt install -y build-essential git cmake qt6-base-private-dev qt6-tools-dev net-tools
+RUN apt install -y qt6-serialport-dev kde-plasma-desktop xrdp nano
+
+RUN mkdir src
+WORKDIR /root/src
+RUN apt autoclean
+RUN git clone https://github.com/qt/qtmqtt -b 6.4.2
+RUN mkdir -p /root/src/qtmqtt/build
+WORKDIR /root/src/qtmqtt/build
+RUN cmake ..
+RUN make
+RUN make install
+WORKDIR /root/src
+RUN rm -fR /root/src/qtmqtt
+RUN adduser --home /home/dstream --shell /bin/bash dstream
+RUN adduser dstream dialout
+RUN adduser dstream plugdev
+RUN adduser dstream adm
+RUN adduser dstream cdrom
+RUN adduser dstream sudo
+RUN adduser dstream dip
+#RUN adduser dstream lxd
+
+# WORKDIR /root/src
+# RUN git clone https://github.com/qt/qtgrpc -b 6.2.4
+# RUN mkdir -p /root/src/qtgrpc/build
+# WORKDIR /root/src/qtgrpc/build
+# RUN cmake ..
+# RUN make
+# RUN make install
+# RUN rm -fR /root/src/qtgrpc
+
+
+ENTRYPOINT [ "/bin/bash" ]
