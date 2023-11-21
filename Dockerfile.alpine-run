@@ -18,6 +18,6 @@ FROM alpine:3.18.4
 WORKDIR /root
 RUN apk add -U --no-cache net-tools qt6-qtbase qt6-qtserialport qt6-qtbase-sqlite git bash
 RUN echo "alias ll='ls -lA --color=auto'" >> /root/.bashrc
-WORKDIR /root
+#WORKDIR /root
 # What the container should run when it is started.
 ENTRYPOINT [ "/bin/bash" ]
