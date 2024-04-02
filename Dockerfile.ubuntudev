@@ -1,11 +1,11 @@
-FROM ubuntu:mantic as base
+FROM ubuntu:jammy as base
 WORKDIR /root
 RUN apt update && apt upgrade -y && apt install -y build-essential git cmake qt6-base-private-dev qt6-tools-dev net-tools
 RUN apt install -y qt6-serialport-dev
 RUN mkdir src
 WORKDIR /root/src
 RUN apt autoclean
-RUN git clone https://github.com/qt/qtmqtt -b 6.4.2
+RUN git clone https://github.com/qt/qtmqtt -b 6.2.4
 RUN mkdir -p /root/src/qtmqtt/build
 WORKDIR /root/src/qtmqtt/build
 RUN cmake ..
@@ -15,7 +15,7 @@ WORKDIR /root/src
 RUN rm -fR /root/src/qtmqtt
 
 # WORKDIR /root/src
-# RUN git clone https://github.com/qt/qtgrpc -b 6.2.4
+# RUN git clone https://github.com/qt/qtgrpc -b 6.4.2
 # RUN mkdir -p /root/src/qtgrpc/build
 # WORKDIR /root/src/qtgrpc/build
 # RUN cmake ..
@@ -24,4 +24,4 @@ RUN rm -fR /root/src/qtmqtt
 # RUN rm -fR /root/src/qtgrpc
 
 
-ENTRYPOINT [ "/bin/bash" ]
+CMD [ "/bin/bash" ]
